@@ -4,7 +4,6 @@ class_name Circle extends Node2D
 @export var creation_time:Dictionary
 
 func _init(x=0, y=0, r=100):
-	print("Circle: _init")
 	position = Vector2(x, y)
 	radius = r
 	creation_time = Time.get_time_dict_from_system()
@@ -15,13 +14,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#print("Circle: _process")
 	#queue_redraw()
 	pass
 
 func _draw():
-	# Your draw commands here
-	print("Circle: _draw")
 	draw_circle(Vector2(0, 0), radius, Color.WHITE)
 
 #Create a Circle class that receives x, y and radius arguments in its constructor,

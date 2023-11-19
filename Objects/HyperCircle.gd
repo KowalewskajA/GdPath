@@ -4,7 +4,6 @@ class_name HyperCircle extends Circle
 @export var outer_radius: float
 
 func _init(x=0, y=0, r=100, lw=10, ou_r=200):
-	print("HyperCircle: _init")
 	super(x, y, r)
 	line_width = lw
 	outer_radius = ou_r
@@ -17,13 +16,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#print("Circle: _process")
 	#queue_redraw()
 	pass
 
 func _draw():
-	# Your draw commands here
-	print("HyperCircle: _draw")
 	draw_circle(Vector2(0, 0), outer_radius, Color.WHITE)
 	draw_circle(Vector2(0, 0), outer_radius - line_width, Color.BLACK)
 	super()
