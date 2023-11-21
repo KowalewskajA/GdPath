@@ -2,6 +2,9 @@ extends Node2D
 
 var circle
 var hcircle
+var cross
+var timer
+var timer_counter: int = 0
 var sum: int
 var rng = RandomNumberGenerator.new()
 var pressed_since: int
@@ -11,10 +14,21 @@ var ls_y
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	circle = Circle.new(200, 150, 50)
-	add_child(circle)
-	hcircle = HyperCircle.new(600, 450, 50, 10, 120)
-	add_child(hcircle)
+#	circle = Circle.new(200, 150, 50)
+#	add_child(circle)
+#	hcircle = HyperCircle.new(600, 450, 50, 10, 120)
+#	add_child(hcircle)
+	cross = Cross.new()
+	add_child(cross)
+	
+#	21. Using only a for loop and one declaration of the after function inside
+#	that loop, print 10 random numbers to the screen with an interval of 0.5 
+#	seconds between each print.
+#	timer = Timer.new()
+#	timer.set_autostart(true)
+#	timer.set_wait_time(0.5)
+#	timer.timeout.connect(_on_timer_timeout)
+#	add_child(timer)
 	
 #	15. Suppose we have the following code:		
 #	Will anything happen when mouse1 is pressed?
@@ -96,6 +110,12 @@ func _process(delta):
 
 func _draw():
 	pass
+
+func _on_timer_timeout():
+	if timer_counter == 9:
+		timer.queue_free()
+	print(rng.randi_range(1, 100))
+	timer_counter += 1
 
 func mouse_click():
 	print(
