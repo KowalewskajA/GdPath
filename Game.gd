@@ -3,6 +3,7 @@ extends Node2D
 var circle
 var hcircle
 var cross
+var hp_bar
 var timer
 var timer_counter: int = 0
 var sum: int
@@ -18,8 +19,10 @@ func _ready():
 #	add_child(circle)
 #	hcircle = HyperCircle.new(600, 450, 50, 10, 120)
 #	add_child(hcircle)
-	cross = Cross.new()
-	add_child(cross)
+#	cross = Cross.new()
+#	add_child(cross)
+	hp_bar = HP_Bar.new()
+	add_child(hp_bar)
 	
 #	21. Using only a for loop and one declaration of the after function inside
 #	that loop, print 10 random numbers to the screen with an interval of 0.5 
