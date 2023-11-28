@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://bitxg2sb26a3o"]
+[gd_scene load_steps=4 format=3 uid="uid://bitxg2sb26a3o"]
 
+[ext_resource type="Shader" path="res://Shader/Game.gdshader" id="1_c5o5t"]
 [ext_resource type="Script" path="res://Game.gd" id="1_hisi6"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4nm4v"]
+shader = ExtResource("1_c5o5t")
+
 [node name="Game" type="Node2D"]
+material = SubResource("ShaderMaterial_4nm4v")
 script = ExtResource("1_hisi6")
