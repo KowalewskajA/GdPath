@@ -4,7 +4,7 @@ var timer: Timer
 var current_scene
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready():	
 	#current_scene = CircleScene.new()
 	current_scene = Stage.new()
 	add_child(current_scene)
