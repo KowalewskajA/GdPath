@@ -8,7 +8,7 @@ var dead:bool
 func _init(a, x=0, y=0, opts={}):
 	area = a
 	position = Vector2(x, y)
-	timer = Timer.new()
+	timer
 	dead = false
 	if opts.size() > 0:
 		for key in opts:

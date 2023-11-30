@@ -11,6 +11,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+#	print_orphan_nodes()
+#	print_tree_pretty()
 	pass
 
 func _draw():

@@ -7,6 +7,13 @@ var game_scale:float
 var gw:float
 var gh:float
 
+var de_color:Color = Color8(222, 222, 222)
+var bg_color:Color = Color8(16, 16, 16)
+var am_color:Color = Color8(123, 200, 164)
+var bo_color:Color = Color8(76, 195, 217)
+var hp_color:Color = Color8(241, 103, 69)
+var sp_color:Color = Color8(255, 198, 93)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	game_width = ProjectSettings.get_setting("display/window/size/viewport_width")

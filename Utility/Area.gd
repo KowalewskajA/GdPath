@@ -3,13 +3,16 @@ class_name Area extends Node2D
 var timer: Timer
 var game_objects = Array()
 
+func _init():
+	name = "Area"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	for index in game_objects.size():
+	for index in range(game_objects.size(), 1, -1) :
 		if is_instance_valid(game_objects[index-1]) == true:
 			var game_object = game_objects[index-1]
 			if game_object.get("dead") == true:

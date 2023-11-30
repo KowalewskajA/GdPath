@@ -6,9 +6,13 @@ var area:Area
 var camera:ExtendedCamera
 var player:Player
 
+func _init():
+	name = "Stage"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	area = Area.new()
+	area.name = "Area"
 	add_child(area)
 	camera = ExtendedCamera.new()
 	add_child(camera)

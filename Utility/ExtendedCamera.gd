@@ -12,6 +12,9 @@ var start_time:float
 var end_time:float
 var current_time:float
 
+func _init():
+	name = "exCamera"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#shake(4, 60, 1)

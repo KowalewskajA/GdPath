@@ -7,6 +7,7 @@ var r:float
 
 func _init(area, x=0, y=0, opts={}):
 	super(area, x, y, opts)
+	name = "ShootEffect"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +17,7 @@ func _ready():
 	tween.finished.connect(die)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if player: 
 		position.x = player.position.x + d * cos(player.r) 
 		position.y = player.position.y + d * sin(player.r)
@@ -34,4 +35,4 @@ func _draw():
 #		), PI/4
 #	)
 	draw_set_transform(Vector2.ZERO, PI/4)
-	draw_rect(Rect2(Vector2(-0.5 * w, -0.5 * w), Vector2(w,w)), Color.WHITE)
+	draw_rect(Rect2(Vector2(-0.5 * w, -0.5 * w), Vector2(w,w)), G.de_color)
