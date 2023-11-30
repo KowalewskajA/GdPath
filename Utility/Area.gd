@@ -21,6 +21,7 @@ func add_gameobject(game_object_type, x=0, y=0, opts={}):
 	var game_object = game_object_type.new(self, x, y, opts)
 	game_objects.append(game_object)
 	add_child(game_object)
+	return game_object
 
 func get_gameobjects(f:Callable):
 	var found_objects = Array()

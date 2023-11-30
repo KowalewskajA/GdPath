@@ -1,11 +1,11 @@
 extends Node2D
 
-var game_width:int
-var game_height:int
-var game_scale:int
+var game_width:float
+var game_height:float
+var game_scale:float
 
-var gw:int
-var gh:int
+var gw:float
+var gh:float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,5 +17,5 @@ func _ready():
 	gh = game_height / game_scale
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
