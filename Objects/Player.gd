@@ -11,7 +11,7 @@ var body:CharacterBody2D
 
 func _init(area, x=0, y=0, opts={}):
 	super(area, x, y, opts)
-	name = "Player"
+	name = "Player-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,6 +39,10 @@ func _physics_process(delta):
 	v = min(v + a * delta, max_v)
 	position = Vector2(position.x + v * delta * cos(r), position.y + v * delta * sin(r))
 	body.position = position
+	var gp = global_position
+	if gp.x < -w or gp.x > G.gw + w or gp.y < -h or gp.y > G.gh + h:
+		if !dead:
+			die()
 	queue_redraw()
 
 func _draw():
@@ -54,6 +58,9 @@ func _draw():
 	draw_line(Vector2.ZERO, Vector2(2 * w * cos(r), 2 * w * sin(r)), G.de_color)
 	draw_line(Vector2.ZERO, Vector2(2 * w * cos(rotation), 2 * w * sin(rotation)), G.hp_color)
 	draw_unfilled_circle(Vector2.ZERO, w, G.de_color)
+
+func die():
+	super()
 
 func shoot():
 	var d = 1.2 * w

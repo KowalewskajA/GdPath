@@ -7,7 +7,7 @@ var r:float
 
 func _init(area, x=0, y=0, opts={}):
 	super(area, x, y, opts)
-	name = "ShootEffect"
+	name = "ShootEffect-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,7 +18,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if player: 
+	if is_instance_valid(player): 
 		position.x = player.position.x + d * cos(player.r) 
 		position.y = player.position.y + d * sin(player.r)
 		rotation = player.r
