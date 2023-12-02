@@ -61,6 +61,9 @@ func _draw():
 
 func die():
 	super()
+	for i:int in range(randi_range(8, 12)):
+		area.add_gameobject(ExplosionParticle, position.x, position.y)
+	G.slow(0.15, 1)
 
 func shoot():
 	var d = 1.2 * w

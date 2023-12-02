@@ -32,3 +32,9 @@ func _process(_delta):
 func get_id():
 	obj_counter += 1
 	return obj_counter
+
+func slow(amount, duration):
+	Engine.time_scale = amount
+	var tween = create_tween()#'slow', duration, _G, {slow_amount = 1}, 'in-out-cubic')
+	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(Engine, "time_scale", 1, duration)

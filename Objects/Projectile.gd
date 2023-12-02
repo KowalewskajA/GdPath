@@ -3,6 +3,7 @@ class_name Projectile extends GameObject
 var s:float = 2.5
 var v:int = 100
 var r:float = 0
+var color:Color = G.de_color
 var body: CharacterBody2D
 var shape: CircleShape2D
 
@@ -31,9 +32,18 @@ func _physics_process(delta):
 	position = Vector2(position.x + v * delta * cos(r), position.y + v * delta * sin(r))
 	body.position = position
 	var gp = global_position
-	if gp.x < -s or gp.x > G.gw + s or gp.y < -s or gp.y > G.gh + s:
+	if gp.x < 0 or gp.x > G.gw or gp.y < 0 or gp.y > G.gh:
 		die()
 	queue_redraw()
 
 func _draw():
 	draw_unfilled_circle(Vector2.ZERO, s, G.de_color)
+
+func die():
+	super()
+	area.add_gameobject(
+		ProjectileDeathEffect, 
+		position.x, 
+		position.y, 
+		{color = color, w = 4 * s}
+	)
