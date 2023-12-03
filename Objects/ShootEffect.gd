@@ -5,8 +5,8 @@ var player:Player
 var d:float
 var r:float
 
-func _init(area, x=0, y=0, opts={}):
-	super(area, x, y, opts)
+func _init(_area, x=0, y=0, opts={}):
+	super(_area, x, y, opts)
 	name = "ShootEffect-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.

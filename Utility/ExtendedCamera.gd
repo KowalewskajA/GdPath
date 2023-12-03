@@ -12,13 +12,19 @@ var start_time:float
 var end_time:float
 var current_time:float
 
+var root:Node
+var rect:ColorRect
+var timer:Timer
+
 func _init():
 	name = "exCamera"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#shake(4, 60, 1)
-	pass # Replace with function body.
+	root = get_node('/root')
+
+func _draw():
+	draw_rect(Rect2(Vector2(-0.5 * G.gw, -0.5 * G.gh), Vector2(G.gw,G.gh)), G.bg_color)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -58,3 +64,17 @@ func current_amplitude(percentage:float, samples:Array):
 	var s1 = s0 + 1
 	return (samples[s0] + (s - s0)*(samples[s1] - samples[s0])) * (1 - percentage)
 
+func flash(seconds:float):
+	rect = ColorRect.new()
+	rect.set_size(Vector2(G.gw, G.gh))
+	rect.set_color(G.bg_color)
+	root.add_child(rect)
+	timer = Timer.new()
+	timer.set_autostart(true)
+	timer.set_wait_time(seconds)
+	timer.timeout.connect(
+		func():
+			rect.queue_free()
+			timer.queue_free()
+	)
+	add_child(timer)

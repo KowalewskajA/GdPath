@@ -7,8 +7,8 @@ var color:Color = G.de_color
 var body: CharacterBody2D
 var shape: CircleShape2D
 
-func _init(area, x=0, y=0, opts={}):
-	super(area, x, y, opts)
+func _init(_area, x=0, y=0, opts={}):
+	super(_area, x, y, opts)
 	name = "Projectile-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.

@@ -4,8 +4,8 @@ var w:int = 0
 var timer_status:int  = 1
 var color:Color = G.de_color
 
-func _init(area, x=0, y=0, opts={}):
-	super(area, x, y, opts)
+func _init(_area, x=0, y=0, opts={}):
+	super(_area, x, y, opts)
 	name = "ProjectileDeathEffect-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.
@@ -19,7 +19,7 @@ func _ready():
 	add_child(timer)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	queue_redraw()
 
 func _draw():

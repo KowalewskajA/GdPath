@@ -4,13 +4,23 @@ var w:int
 var h:int
 var r:float = -PI/2
 var rv:float = 1.66*PI
+
 var v:float = 0
-var max_v:float = 100
+var base_max_v:float = 100
+var max_v:float = base_max_v
 var a: float = 100
+
 var body:CharacterBody2D
 
-func _init(area, x=0, y=0, opts={}):
-	super(area, x, y, opts)
+var shoot_timer:Timer
+var tick_timer:Timer
+var trail_timer:Timer
+
+var trail_color:Color = G.sp_color
+var boosting:bool = false
+
+func _init(_area, x=0, y=0, opts={}):
+	super(_area, x, y, opts)
 	name = "Player-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.
@@ -23,22 +33,29 @@ func _ready():
 	shape.set_radius(w)
 	body.shape_owner_add_shape(shape_owner_id, shape)
 	add_child(body)
-	timer = Timer.new()
-	timer.name = "ShootTimer"
-	timer.set_autostart(true)
-	timer.set_wait_time(0.24)
-	timer.timeout.connect(shoot)
-	add_child(timer)
+	_create_timer(shoot_timer, "ShootTimer", 0.24, shoot)
+	_create_timer(tick_timer, "TickTimer", 5.00, tick)
+	_create_timer(trail_timer, "TrailTimer", 0.01, trail)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	max_v = base_max_v
+	trail_color = G.sp_color
+	if Input.is_action_pressed("speed_up"):
+		max_v = 1.5 * base_max_v
+		trail_color = G.hp_color
+	if Input.is_action_pressed("speed_down"):
+		max_v = 0.5 * base_max_v
+		trail_color = G.bo_color
 	if Input.is_action_pressed("left"):
 		r = r - rv * delta
 	if Input.is_action_pressed("right"):
 		r = r + rv * delta
+	
 	v = min(v + a * delta, max_v)
 	position = Vector2(position.x + v * delta * cos(r), position.y + v * delta * sin(r))
 	body.position = position
+	
 	var gp = global_position
 	if gp.x < -w or gp.x > G.gw + w or gp.y < -h or gp.y > G.gh + h:
 		if !dead:
@@ -64,6 +81,8 @@ func die():
 	for i:int in range(randi_range(8, 12)):
 		area.add_gameobject(ExplosionParticle, position.x, position.y)
 	G.slow(0.15, 1)
+	G.camera.shake(6, 60, 0.4)
+	G.camera.flash(0.033) #2/60
 
 func shoot():
 	var d = 1.2 * w
@@ -117,4 +136,27 @@ func shoot():
 #		position.y + 1.5 * d * sin(r) - 8 * sin(r + PI/2), 
 #		{r = r}
 #	)
-	pass
+
+func tick():
+	area.add_gameobject(TickEffect, position.x, position.y, {parent = self})
+
+func trail():
+	area.add_gameobject(
+		TrailParticle, 
+		position.x - w * cos(r), 
+		position.y - h * sin(r), 
+		{
+			parent = self, 
+			r = randi_range(2, 4), 
+			d = randf_range(0.15, 0.25), 
+			color = trail_color
+		}
+	)
+
+func _create_timer(variable, variable_name:String, time:float, function:Callable):
+	variable = Timer.new()
+	variable.name = variable_name
+	variable.set_autostart(true)
+	variable.set_wait_time(time)
+	variable.timeout.connect(function)
+	add_child(variable)

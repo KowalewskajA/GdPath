@@ -26,8 +26,8 @@ func list_gameobject_types():
 		if is_instance_valid(game_objects[index-1]) == true:
 			var game_object = game_objects[index-1]
 			var i = game_object.get("name").find("-")
-			var name = game_object.get("name").left(i)
-			if name in dict:
+			var _name = game_object.get("name").left(i)
+			if _name in dict:
 				dict[name] += 1
 			else:
 				dict[name] = 1

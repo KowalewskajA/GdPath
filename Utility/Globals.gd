@@ -16,6 +16,8 @@ var sp_color:Color = Color8(255, 198, 93)
 
 var obj_counter = 0
 
+var camera:ExtendedCamera
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	game_width = ProjectSettings.get_setting("display/window/size/viewport_width")
@@ -24,6 +26,10 @@ func _ready():
 	
 	gw = game_width / game_scale
 	gh = game_height / game_scale
+	
+	camera = ExtendedCamera.new()
+	add_child(camera)
+	camera.set("position", Vector2(G.gw/2, G.gh/2))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

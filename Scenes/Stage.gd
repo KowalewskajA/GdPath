@@ -7,6 +7,8 @@ var camera:ExtendedCamera
 var player:Player
 
 var controls = {
+	"speed_up": [KEY_UP, KEY_W],
+	"speed_down": [KEY_DOWN, KEY_S],
 	"left": [KEY_LEFT, KEY_A],
 	"right": [KEY_RIGHT, KEY_D],
 	"destroy": [KEY_F3],
@@ -23,9 +25,6 @@ func _ready():
 	area = Area.new()
 	area.name = "Area"
 	add_child(area)
-	camera = ExtendedCamera.new()
-	add_child(camera)
-	camera.set("position", Vector2(G.gw/2, G.gh/2))
 	player = area.add_gameobject(Player, G.gw/2, G.gh/2, {w=12, h=12})
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,7 +34,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("destroy") and is_instance_valid(player):
 		player.die()
 	if Input.is_action_just_pressed("shake"):
-		camera.shake(2, 60, 2)
+		G.camera.shake(2, 60, 2)
 	if Input.is_action_just_pressed("shutdown"):
 		get_tree().quit()
 	queue_redraw()

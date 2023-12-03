@@ -7,8 +7,8 @@ var s:int = randi_range(2, 3)
 var v:int = randi_range(75, 150)
 var d:float = randf_range(0.3, 0.5)
 
-func _init(area, x=0, y=0, opts={}):
-	super(area, x, y, opts)
+func _init(_area, x=0, y=0, opts={}):
+	super(_area, x, y, opts)
 	name = "ExplosionParticle-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.
