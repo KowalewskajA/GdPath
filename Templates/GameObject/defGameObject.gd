@@ -5,7 +5,7 @@ class_name DEF extends _BASE_
 
 # every variable that should be set-able at creation via opts Dictionary has to be set here
 
-func _init(_area, x=0, y=0, opts={}):
+func _init(_area:Area, x:int=0, y:int=0, opts:Dictionary={}) -> void:
 	super(_area, x, y, opts)
 	name = "DEF-" + str(G.get_id())
 

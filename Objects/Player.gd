@@ -19,17 +19,17 @@ var trail_timer:Timer
 var trail_color:Color = G.sp_color
 var boosting:bool = false
 
-func _init(_area, x=0, y=0, opts={}):
+func _init(_area:Area, x:int=0, y:int=0, opts:={}) -> void:
 	super(_area, x, y, opts)
 	name = "Player-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	body = CharacterBody2D.new()
 	body.set_position(get_position())
 	body.set_name("body")
-	var shape_owner_id = body.create_shape_owner(self)
-	var shape = CircleShape2D.new()
+	var shape_owner_id:int = body.create_shape_owner(self)
+	var shape:CircleShape2D = CircleShape2D.new()
 	shape.set_radius(w)
 	body.shape_owner_add_shape(shape_owner_id, shape)
 	add_child(body)
@@ -38,7 +38,7 @@ func _ready():
 	_create_timer(trail_timer, "TrailTimer", 0.01, trail)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(delta:float) -> void:
 	max_v = base_max_v
 	trail_color = G.sp_color
 	if Input.is_action_pressed("speed_up"):
@@ -56,13 +56,13 @@ func _physics_process(delta):
 	position = Vector2(position.x + v * delta * cos(r), position.y + v * delta * sin(r))
 	body.position = position
 	
-	var gp = global_position
+	var gp:Vector2 = global_position
 	if gp.x < -w or gp.x > G.gw + w or gp.y < -h or gp.y > G.gh + h:
 		if !dead:
 			die()
 	queue_redraw()
 
-func _draw():
+func _draw() -> void:
 	# 480 270
 #	82. Using pushRotate, rotate the player around its center by 180 degrees.
 #	draw_set_transform(Vector2.ZERO, PI)
@@ -76,7 +76,7 @@ func _draw():
 	draw_line(Vector2.ZERO, Vector2(2 * w * cos(rotation), 2 * w * sin(rotation)), G.hp_color)
 	draw_unfilled_circle(Vector2.ZERO, w, G.de_color)
 
-func die():
+func die() -> void:
 	super()
 	for i:int in range(randi_range(8, 12)):
 		area.add_gameobject(ExplosionParticle, position.x, position.y)
@@ -84,8 +84,8 @@ func die():
 	G.camera.shake(6, 60, 0.4)
 	G.camera.flash(0.033) #2/60
 
-func shoot():
-	var d = 1.2 * w
+func shoot() -> void:
+	var d:float = 1.2 * w
 	area.add_gameobject(
 		ShootEffect, 
 		position.x + d * cos(r), 
@@ -137,10 +137,10 @@ func shoot():
 #		{r = r}
 #	)
 
-func tick():
+func tick() -> void:
 	area.add_gameobject(TickEffect, position.x, position.y, {parent = self})
 
-func trail():
+func trail() -> void:
 	area.add_gameobject(
 		TrailParticle, 
 		position.x - w * cos(r), 
@@ -153,7 +153,7 @@ func trail():
 		}
 	)
 
-func _create_timer(variable, variable_name:String, time:float, function:Callable):
+func _create_timer(variable:Variant, variable_name:String, time:float, function:Callable) -> void:
 	variable = Timer.new()
 	variable.name = variable_name
 	variable.set_autostart(true)

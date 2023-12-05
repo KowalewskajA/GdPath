@@ -5,26 +5,26 @@ var player:Player
 var d:float
 var r:float
 
-func _init(_area, x=0, y=0, opts={}):
+func _init(_area:Area, x:int=0, y:int=0, opts:Dictionary={}) -> void:
 	super(_area, x, y, opts)
 	name = "ShootEffect-" + str(G.get_id())
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	tween=create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "w", 0, 0.1)
 	tween.finished.connect(die)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta:float) -> void:
 	if is_instance_valid(player): 
 		position.x = player.position.x + d * cos(player.r) 
 		position.y = player.position.y + d * sin(player.r)
 		rotation = player.r
 	pass
 
-func _draw():
+func _draw() -> void:
 #	85. Using pushRotate, rotate the ShootEffect object around the player's center
 #	by 90 degrees (on top of already rotating it by the player's direction).
 #	TODO: Something is wrong here, it glitches
