@@ -19,9 +19,42 @@ var trail_timer:Timer
 var trail_color:Color = G.sp_color
 var boosting:bool = false
 
+var ship:String = "Fighter"
+var polygons:Dictionary = {}
+
 func _init(_area:Area, x:int=0, y:int=0, opts:={}) -> void:
 	super(_area, x, y, opts)
 	name = "Player-" + str(G.get_id())
+	if ship == "Fighter":
+		polygons[0]= PackedVector2Array()
+		polygons[0].append(Vector2(w, 0))
+		polygons[0].append(Vector2(w/2, -w/2))
+		polygons[0].append(Vector2(-w/2, -w/2))
+		polygons[0].append(Vector2(-w, 0))
+		polygons[0].append(Vector2(-w/2, w/2))
+		polygons[0].append(Vector2(w/2, w/2))
+		polygons[0].append(Vector2(w, 0))
+		
+		polygons[1]= PackedVector2Array()
+		polygons[1].append(Vector2(w/2, -w/2))
+		polygons[1].append(Vector2(0, -w))
+		polygons[1].append(Vector2(-w -w/2, -w))
+		polygons[1].append(Vector2(-3*w/4, -w/4))
+		polygons[1].append(Vector2(-w/2, -w/2))
+		polygons[1].append(Vector2(w/2, -w/2))
+		
+		polygons[2]= PackedVector2Array()
+		polygons[2].append(Vector2(w/2, w/2))
+		polygons[2].append(Vector2(0, w))
+		polygons[2].append(Vector2(-w -w/2, w))
+		polygons[2].append(Vector2(-3*w/4, w/4))
+		polygons[2].append(Vector2(-w/2, w/2))
+		polygons[2].append(Vector2(w/2, w/2))
+
+	#for i in range(0, polygons.size()):
+		#colors[i]= PackedColorArray()
+		#for j in range(0, polygons[i].size()):
+			#colors[i].append(G.de_color)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -72,9 +105,12 @@ func _draw() -> void:
 #	84. Using pushRotate, rotate the line that points in the player's moving 
 #	direction around the player's center by 90 degrees.
 #	draw_set_transform(Vector2.ZERO, PI/2)
-	draw_line(Vector2.ZERO, Vector2(2 * w * cos(r), 2 * w * sin(r)), G.de_color)
-	draw_line(Vector2.ZERO, Vector2(2 * w * cos(rotation), 2 * w * sin(rotation)), G.hp_color)
-	draw_unfilled_circle(Vector2.ZERO, w, G.de_color)
+	#draw_line(Vector2.ZERO, Vector2(2 * w * cos(r), 2 * w * sin(r)), G.de_color)
+	#draw_line(Vector2.ZERO, Vector2(2 * w * cos(rotation), 2 * w * sin(rotation)), G.hp_color)
+	draw_set_transform(Vector2.ZERO, r)
+	for i in range(0, polygons.size()):
+		var points = distort_points(polygons[i])
+		draw_polyline(points, G.de_color)
 
 func die() -> void:
 	super()
@@ -143,8 +179,19 @@ func tick() -> void:
 func trail() -> void:
 	area.add_gameobject(
 		TrailParticle, 
-		position.x - w * cos(r), 
-		position.y - h * sin(r), 
+		position.x - 0.9 * w * cos(r) + 0.2 * w * cos(r - PI/2), 
+		position.y - 0.9 * w * sin(r) + 0.2 * w * sin(r - PI/2),
+		{
+			parent = self, 
+			r = randi_range(2, 4), 
+			d = randf_range(0.15, 0.25), 
+			color = trail_color
+		}
+	)
+	area.add_gameobject(
+		TrailParticle, 
+		position.x - 0.9 * w * cos(r) + 0.2 * w * cos(r + PI/2), 
+		position.y - 0.9 * w * sin(r) + 0.2 * w * sin(r + PI/2),
 		{
 			parent = self, 
 			r = randi_range(2, 4), 

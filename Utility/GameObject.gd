@@ -27,6 +27,15 @@ func _draw() -> void:
 func die() -> void:
 	dead = true
 
+func distort_points(points:PackedVector2Array) -> PackedVector2Array:
+	var d_points = PackedVector2Array()
+	for i in range(0, points.size()):
+		if i % 2 == 0:
+			d_points.append(points[i] + Vector2(0, randi_range(-1, 1)))
+		else:
+			d_points.append(points[i] + Vector2(randi_range(-1, 1), 0))
+	return d_points
+
 func draw_unfilled_circle(center:Vector2, radius:float, color:Color) -> void:
 	var nb_points:int = 32
 	var points_arc:Array = PackedVector2Array()
