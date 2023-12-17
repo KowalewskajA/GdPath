@@ -4,6 +4,7 @@ var area:Node2D
 var timer:Timer
 var tween:Tween
 var dead:bool
+#var depth:int
 
 func _init(a:Area, x:int=0, y:int=0, opts:Dictionary={}) -> void:
 	area = a
@@ -12,6 +13,7 @@ func _init(a:Area, x:int=0, y:int=0, opts:Dictionary={}) -> void:
 	if opts.size() > 0:
 		for key:String in opts:
 			self.set(key, opts[key])
+	z_index = 0 # aka depth
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

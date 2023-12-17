@@ -17,6 +17,7 @@ config/icon="res://Ship-Beta.png"
 [autoload]
 
 G="*res://Utility/Globals.gd"
+Ships="*res://Utility/Ships.gd"
 
 [debug]
 

@@ -25,32 +25,8 @@ var polygons:Dictionary = {}
 func _init(_area:Area, x:int=0, y:int=0, opts:={}) -> void:
 	super(_area, x, y, opts)
 	name = "Player-" + str(G.get_id())
-	if ship == "Fighter":
-		polygons[0]= PackedVector2Array()
-		polygons[0].append(Vector2(w, 0))
-		polygons[0].append(Vector2(w/2, -w/2))
-		polygons[0].append(Vector2(-w/2, -w/2))
-		polygons[0].append(Vector2(-w, 0))
-		polygons[0].append(Vector2(-w/2, w/2))
-		polygons[0].append(Vector2(w/2, w/2))
-		polygons[0].append(Vector2(w, 0))
-		
-		polygons[1]= PackedVector2Array()
-		polygons[1].append(Vector2(w/2, -w/2))
-		polygons[1].append(Vector2(0, -w))
-		polygons[1].append(Vector2(-w -w/2, -w))
-		polygons[1].append(Vector2(-3*w/4, -w/4))
-		polygons[1].append(Vector2(-w/2, -w/2))
-		polygons[1].append(Vector2(w/2, -w/2))
-		
-		polygons[2]= PackedVector2Array()
-		polygons[2].append(Vector2(w/2, w/2))
-		polygons[2].append(Vector2(0, w))
-		polygons[2].append(Vector2(-w -w/2, w))
-		polygons[2].append(Vector2(-3*w/4, w/4))
-		polygons[2].append(Vector2(-w/2, w/2))
-		polygons[2].append(Vector2(w/2, w/2))
-
+	polygons = Ships.populate_polygons(ship, w)
+	
 	#for i in range(0, polygons.size()):
 		#colors[i]= PackedColorArray()
 		#for j in range(0, polygons[i].size()):
@@ -177,28 +153,29 @@ func tick() -> void:
 	area.add_gameobject(TickEffect, position.x, position.y, {parent = self})
 
 func trail() -> void:
-	area.add_gameobject(
-		TrailParticle, 
-		position.x - 0.9 * w * cos(r) + 0.2 * w * cos(r - PI/2), 
-		position.y - 0.9 * w * sin(r) + 0.2 * w * sin(r - PI/2),
-		{
-			parent = self, 
-			r = randi_range(2, 4), 
-			d = randf_range(0.15, 0.25), 
-			color = trail_color
-		}
-	)
-	area.add_gameobject(
-		TrailParticle, 
-		position.x - 0.9 * w * cos(r) + 0.2 * w * cos(r + PI/2), 
-		position.y - 0.9 * w * sin(r) + 0.2 * w * sin(r + PI/2),
-		{
-			parent = self, 
-			r = randi_range(2, 4), 
-			d = randf_range(0.15, 0.25), 
-			color = trail_color
-		}
-	)
+	if ship == "Fighter":
+		area.add_gameobject(
+			TrailParticle, 
+			position.x - 0.9 * w * cos(r) + 0.2 * w * cos(r - PI/2), 
+			position.y - 0.9 * w * sin(r) + 0.2 * w * sin(r - PI/2),
+			{
+				parent = self, 
+				r = randi_range(2, 4), 
+				d = randf_range(0.15, 0.25), 
+				color = trail_color
+			}
+		)
+		area.add_gameobject(
+			TrailParticle, 
+			position.x - 0.9 * w * cos(r) + 0.2 * w * cos(r + PI/2), 
+			position.y - 0.9 * w * sin(r) + 0.2 * w * sin(r + PI/2),
+			{
+				parent = self, 
+				r = randi_range(2, 4), 
+				d = randf_range(0.15, 0.25), 
+				color = trail_color
+			}
+		)
 
 func _create_timer(variable:Variant, variable_name:String, time:float, function:Callable) -> void:
 	variable = Timer.new()
